@@ -1,0 +1,1 @@
+yuidoc ../../proxy/ --no-code -o ../../../doc/

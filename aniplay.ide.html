@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>AniPlay</title>
+<style>
+	body {
+		font-size: 1em;
+		font-family: Malgun Gothic;
+		color: #1a1a1a;
+		font-weight: bold;
+		margin: 10px;
+		padding: 0px;
+	}
+	::selection {
+		color:#000;
+	}
+	::-moz-selection {
+		color:#000;
+	}
+	div {
+		
+	}
+	.Scene {
+		font-size: 0.8em;
+		opacity: 0.5;
+	}
+	.Scene * {
+		position: relative;
+	}
+	.Scene div {
+		word-wrap: break-word;
+	}
+	.Shape {
+		font-size: 0.7em;
+		display:inline-block;
+		background-color:#fff;
+		height:40px;
+		width:40px;
+		margin:8px;
+		text-align:center;
+	}
+	.Image {
+		
+	}
+	.Circle {
+		border-radius:50%;
+	}
+	#page1 {
+		background-color: #A0CFEC;
+		height: 260px;
+		width: 460px;
+		
+	}
+	#page2 {
+		background-color: #81FEEC;
+		height: 260px;
+		width: 460px;
+	}
+	.Scene #circle1 {
+		height:30px;
+		width:30px;
+		left: 50px;
+		top: 100px;
+	}
+	.Scene #circle1 > span {
+		color: red;
+		font-weight: bold;
+	}
+	.Scene #image1 {
+		height: 30px;
+		width: 30px;
+		left:160px;
+		top: 30px;
+	}
+	.Scene #shape2 {
+		background-color:#fff;
+		height:55px;
+		width:55px;
+		left: 180px;
+		top: 100px;
+	}
+	.Scene #image2 {
+		background-color:magenta;
+		height:30px;
+		width:30px;
+	}
+	.Scene div.activeNodeId {
+		/*background-color: #DEB887 !important;*/
+		background-image: url(resources/bg6x6.png) !important;
+	}
+	div#widgetPanel {
+		position: absolute;
+		top: 10px;
+		left: 480px;
+		height:260px;
+		background-color: #ddd;
+		padding: 0px 10px;
+	}
+	div#widgetPanel div {
+		margin-top: 10px;
+		cursor: pointer;
+	}
+	div#widgetPanel div#imageWidget {
+		width:18px;
+		height:18px;
+		border:1px solid #000;
+	}
+	div#widgetPanel div#circleWidget {
+		width:18px;
+		height:18px;
+		border:1px solid #000;
+		border-radius:50%;
+	}
+	div#cssTitle {
+		position: absolute;
+		top: 10px;
+		left: 530px;
+		width:260px;
+		background-color: #ddd;
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
+		border-bottom: 1px inset #ccc;
+		font-size: 0.7em;
+		padding: 10px;
+	}
+
+	div#cssPanel {
+		position: absolute;
+		top: 45px;
+		left: 530px;
+		height:396px;
+		width:280px;
+		background-color: #ddd;
+		overflow-y: scroll;
+	}
+	div#cssPanel > div {
+		position: absolute;
+		top : 0;
+		left : 0;
+		background-color: transparent;
+		font-size: 0.6em;
+		width: 240px;
+		padding: 10px;
+		display: none;
+	}
+	div#cssPanel > div:nth-child(2) {
+		display: block;
+	}
+	div#cssDiff {
+		position: absolute;
+		top: 442px;
+		left: 530px;
+		height:150px;
+		width:280px;
+		background-color: #ddd;
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+		overflow-y: scroll;
+	}
+	div#cssDiff > div {
+		position: absolute;
+		top : 0;
+		left : 0;
+		background-color: transparent;
+		font-size: 0.6em;
+		width: 240px;
+		padding: 10px;
+		display: none;
+	}
+	div#cssDiff > div:nth-child(2) {
+		display: block;
+	}
+	div#controlPanel {
+		position: absolute;
+		top: 280px;
+		background-color: #ddd;
+		width: 500px;
+		height: 30px;
+		padding: 5px;
+	}
+	div#controlPanel button {
+		font-size: 0.8em;
+	}
+	div#currentTime {
+		position: absolute;
+		font-size: 0.9em;
+		padding: 5px 10px;
+	}
+	#start {
+		display: block;
+		position: absolute;
+		left: 180px;
+	}
+	#play {
+		display: block;
+		position: absolute;
+		left: 230px;
+	}
+	#end {
+		display: block;
+		position: absolute;
+		left: 270px;
+	}
+	#aniListBG {
+		position: absolute;
+		top: 330px;
+		background-color: #ddd;
+		width: 100px;
+		height: 30px;
+	}
+	#aniListBG .aniGroup {
+		position: relative;
+		background-color: #ddd;
+		width: 100%;
+		top: 30px;
+		margin-top: 10px;
+		padding: 2px 0px;
+	}
+	#aniListBG .animation {
+		position: relative;
+		background-color: #eee;
+		height: 13px;
+		padding-top: 2px;
+		margin: 4px 0px;
+		font-size: 0.6em;
+		text-align: right;
+	}
+	#aniListBG span.eye {
+		font-size : 0.6em;
+		margin-left : 10px;
+		margin-right : 10px;
+		border : 1px outset #ccc;
+		padding : 1px;
+		cursor : pointer;
+	}
+	span[class~='eye'].on {
+		color : #000;
+		background-color: #ccc;
+	}
+	span[class~='eye'].off {
+		color : #ccc;
+		background-color: #eee;
+	}
+	#aniListBG[class~='animation'] .activeNodeId {
+		color:red;
+	}
+	#scrollBG {
+		position: absolute;
+		top: 330px;
+		left: 120px;
+		background-color: #ddd;
+		width: 400px;
+		height: 30px;
+		background-image: url(resources/unit8x20.png);
+		background-repeat: repeat-x;
+	}
+	#scrollBG #scrollButton {
+		position: relative;
+		background-color: #333;
+		width: 0px;
+		height: 30px;
+		cursor: pointer;
+		opacity: 0.5;
+		z-index: 10;
+		border-right: 1px solid #F62817;
+	}
+	#scrollBG #indicator {
+		position: relative;
+		width: 1px;
+		height: 300%;
+		border-left: 1px solid #F62817;
+		z-index: 10;
+		float: left;
+	}
+	#timelineBG {
+		position: absolute;
+		top: 370px;
+		left: 120px;
+	}
+	#timelineBG .aniGroup {
+		position: relative;
+		background-color: #ddd;
+		width: 100%;
+		margin-bottom: 10px;
+		padding: 2px 0px;
+		opacity: 0.9;
+		cursor:auto;
+	}
+	#timelineBG .animation {
+		position: relative;
+		background-color: #77BFC7;
+		width: 0;
+		height: 13px;
+		padding-top: 2px;
+		margin: 4px 0px;
+		font-size: 0.6em;
+		cursor:pointer;
+	}
+	#timelineBG .animation .keyframe {
+		position: absolute;
+		right:0px;
+		width:8px;
+		height:100%;
+		bottom: 0px;
+		background-color: #56A5EC;
+		cursor:e-resize;
+	}
+	#aniListBG .group,
+	#timelineBG .group {
+		background-color: #FFF8C6;
+	}
+</style>
+<style>
+@-webkit-keyframes aniCircle1 {
+	0% {
+		/*left: 50px;*/
+		/*top: 100px;*/
+		-webkit-transform:translate(20px,20px);
+		background-color: black;
+		opacity: 1;
+	}
+	100% {
+		/*left: 150px;*/
+		/*top: 200px;*/
+		-webkit-transform:translate(100px,100px);
+		background-color: red;
+		opacity: 1;
+	}
+}
+@-webkit-keyframes aniCircle2 {
+	0% {
+		-webkit-transform:translate(-50px,-50px);
+		background-color: white;
+	}
+	100% {
+		-webkit-transform:translate(-100px,-100px);
+		background-color: blue;
+	}
+}
+@-webkit-keyframes aniImage1 {
+	0.0%{
+	-webkit-transform:translate(10px,10px) rotateZ(0deg) rotateX(0deg) rotateY(0deg) skew(0deg,0deg) scale(1,1);}
+	
+	100.0%{
+	-webkit-transform:translate(100px,100px) rotateZ(360deg) rotateX(0deg) rotateY(0deg) skew(0deg,0deg) scale(1,1);}
+}
+@-webkit-keyframes aniShape2 {
+	0% {
+		left: 180px;
+		top: 100px;
+	}
+	100% {
+		left: 70px;
+		top: 10px;
+		background-color: blue;
+	}
+}
+@-webkit-keyframes aniImage2 {
+	0% {
+		background-color: magenta;
+	}
+	100% {
+		background-color: aquamarine;
+		-webkit-transform: matrix(90deg);
+	}
+}
+@keyframes aniCircle1 {
+	0% {
+		/*left: 50px;*/
+		/*top: 100px;*/
+		transform:translate(0px,0px);
+		background-color: white;
+		opacity: 1;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		/*left: 150px;*/
+		/*top: 200px;*/
+		transform:translate(100px,100px);
+		background-color: salmon;
+		opacity: 1;
+	}
+}
+@keyframes aniImage1 {
+	0% {
+		left:160px;
+		top: 100px;
+	}
+	100% {
+		left: 260px;
+		top: 200px;
+		transform: rotate(180deg);
+		/*transform: translate(10px,10px);*/
+	}
+}
+@keyframes aniShape2 {
+	0% {
+		left: 180px;
+		top: 100px;
+	}
+	100% {
+		left: 70px;
+		top: 10px;
+		background-color: blue;
+	}
+}
+@keyframes aniImage2 {
+	0% {
+		background-color: magenta;
+	}
+	100% {
+		background-color: aquamarine;
+		transform: matrix(90deg);
+	}
+}
+</style>
+<!--link rel="stylesheet" href="gen/animation.css"-->
+<script src="gen/animator.js"></script>
+</head>
+<body>
+	<div id="page1" class="Scene" data-role="page" part-id="1">
+		<div id="header1" data-role="header" part-id="2"></div>
+		<div id="content1" data-role="content" part-id="3">
+			<div id="image1" class='Shape' data-role="image" part-id="4">img1</div>
+			<div id="circle1" class='Shape Circle' data-role="circle" part-id="5"><span>cir1</span></div>
+		</div>
+		<div id="footer1"></div>
+	</div>
+	<div id="page2" class="Scene" style='display:none'>
+		<div id="header2" data-role="header" part-id="2"></div>
+		<div id="content3" data-role="content" part-id="3">
+			<div id="shape2" class='Shape' data-role="shape" part-id="6">shp2<div id="image2" class='Shape' data-role="image" part-id="7">img2</div></div>
+		</div>
+		<div id="footer2"></div>
+	</div>
+	
+	<div id='widgetPanel'>
+		<div id='imageWidget' class='Image'></div>
+		<!--div id='circleWidget' class='Circle'></div-->
+	</div>
+	<div id='cssTitle'><span>CSS</span></div>
+	<div id='cssPanel'></div>
+	<div id='cssDiff'></div>
+	<div id='controlPanel'>
+		<div id='currentTime'>100% (0 ms)</div>
+		<button id='start'>◁◁</button>
+		<button id='play'>▶</button>
+		<button id='end'>▷▷</button>
+	</div>
+
+	<div id='aniListBG'>
+	</div>
+
+	<div id='scrollBG'>
+		<div id='scrollButton'></div>
+	</div>
+
+	<div id='timelineBG'>
+	</div>
+
+<script>
+	var aniPlayIsIDE = true;
+</script>
+<script src="resources/jquery-1.10.2.js"></script>
+<script data-main="aniplay/app/main.wub" src="aniplay/vendors/require.js"></script>
+<script>
+window.addEventListener('aniPlayReady',function(){
+	
+	if(aniPlayIsIDE === true){
+		AniPlay.loadPlayModel(animator_cfg);
+	}
+	
+	var $ = AniPlay.dom.bySelector;
+
+	var content1 = $('#content1')[0],
+		circle1 = $('#circle1')[0],
+		imageWidget = $('#imageWidget')[0],
+		circleWidget = $('#circleWidget')[0],
+		scrollButton = $('#scrollButton')[0],
+		scrollBG = $('#scrollBG')[0],
+		aniListBG = $('#aniListBG')[0],
+		timelineBG = $('#timelineBG')[0],
+		cssTitle = $('#cssTitle')[0],
+		cssPanel = $('#cssPanel')[0],
+		cssDiff = $('#cssDiff')[0],
+		currentTime = $('#currentTime')[0],
+		play = $('#play')[0],
+		isMoveMouse = false,
+		moveMouse,
+		activeNodeId = '',
+		beforeCss,
+		aniGroups = [],
+		timelineWidth = parseInt(AniPlay.dom.getStyle(scrollBG,'width')),
+		maxDuration = 0,
+		total = 5000;
+
+	var getId = function(type){
+		var i=1;
+		while($('#'+(type+i).toLowerCase())[0]){
+			i++;
+		}
+		return (type+i).toLowerCase();
+	};
+
+	var addHtmlElement0 = function(type){
+		var id = getId(type);
+		var element = AniPlay.dom.makeElement('div', 
+			{id:id, className:'Shape '+type, innerHTML:id},
+			{element : content1, position : 'inside'}
+		);
+		element.style.backgroundColor = AniPlay.string.getRandomColor();
+		return id;
+	};
+
+	//add HTML Element
+	var addHtmlElement = function(id, code, targetId, pos, styles){
+
+		var blankElement, newElement, targetElement;
+		var addElement = function(newElement, target, pos){
+			if(!targetElement){return;}
+			if(pos=='after' || pos==undefined){
+				target.parentNode.insertBefore(newElement, target.nextSibling) ;
+			}else if(pos=='before'){
+				target.parentNode.insertBefore(newElement, target) ;
+			}else if(pos=='inside'){
+				target.appendChild(newElement);
+			}
+		}
+		var applyStyle = function(element, styles){
+			var prop;
+			for(prop in styles){
+				element.style[prop] = styles[prop];
+			}
+		}
+		//html to object ref
+		blankElement = document.createElement('div');
+		blankElement.innerHTML = code;
+		newElement = blankElement.firstChild;
+		applyStyle(newElement, styles);
+
+		//add
+		targetElement = document.getElementById(targetId);
+		addElement(newElement, targetElement, pos);
+	};
+
+/*
+	circleWidget.addEventListener('click', function(oEvent){
+		var type = oEvent.target.className;
+		addNewWidget(type, 'content1', aniGroups[aniGroups.length-1]);
+	});
+*/
+
+	imageWidget.addEventListener('click', function(oEvent){
+
+		var type = oEvent.target.className;
+		var id = getId(type);
+		var code = "<div id='"+id+"' class='Shape' data-role='image'>"+id+"</div>";
+		var targetId = activeNodeId;
+
+		//add HTML Element
+		addHtmlElement(id, code, targetId, 'after');
+
+		//addNewWidget(type, 'content1', aniGroups[aniGroups.length-1]);
+
+		//add HTML Element to content & get Id, type
+		//var id = addHtmlElement(type);
+
+		//TODO : Selector로 나중에 변경 ?
+		var containerId = 'content1';
+		var animateId = 'animate'+AniPlay.string.ucFirst(id);
+		var angroupId;
+		AniPlay.addWidget(id, containerId, animateId, angroupId, type);
+
+		// 7. add to Timeline
+	});
+
+	var getTimelineGeometry = function(animate){
+		var ratioWidth = parseFloat(animate.duration)*1000/total;
+		//var ratioWidth = parseFloat(animate.duration)*animate.iteration*1000/total;
+		var ratioLeft = parseFloat(animate.delay)*1000/total;
+		var animateWidth = timelineWidth*ratioWidth+'px';
+		var animateLeft = timelineWidth*ratioLeft+'px';
+		return {width:animateWidth, left:animateLeft};
+	};
+
+	var makeCssPanel = function(selector){
+		var id = selector.replace('#','');
+		if(!$('#cssPanel '+selector)[0]){
+			AniPlay.dom.makeElement('div', 
+				{id : id},
+				{element : cssPanel, position : 'inside'}
+			);
+			//console.log('#cssPanel '+selector+' created');
+		}
+		if(!$('#cssDiff '+selector)[0]){
+			AniPlay.dom.makeElement('div', 
+				{id : id},
+				{element : cssDiff, position : 'inside'}
+			);
+			//console.log('#cssDiff '+selector+' created');
+		}
+	};
+
+	var focusElement = function(element){
+		
+		console.log(element);
+		
+		$('#cssPanel #'+activeNodeId)[0].style.display = 'none';
+		$('#cssDiff #'+activeNodeId)[0].style.display = 'none';
+		activeNodeId = element.dataset['nodeId'];
+		var selector = '#'+activeNodeId;
+		var nodeElement = $(selector)[0];
+		var p, result='', diff='',
+			css = AniPlay.dom.getComputedStyleClone(nodeElement);
+		for(p in css){
+			result += p+' : '+css[p]+'<br />';
+		}
+		$('.activeNodeId')[0].className = $('.activeNodeId')[0].className.replace(' activeNodeId','');
+		nodeElement.className += ' activeNodeId';
+		
+		$('#cssTitle')[0].innerHTML = 'CSS :: '+activeNodeId;
+		$('#cssPanel '+selector)[0].innerHTML = result;
+		$('#cssPanel '+selector)[0].style.display = 'block';
+		$('#cssDiff '+selector)[0].style.display = 'block';
+	};
+
+	var updateTimeline = function(element){
+		console.log('updateTimeline()');
+		var delay, animateId, aniGroupId, nodeId;
+		delay = parseInt(element.style.left)*total/timelineWidth;
+		duration = parseInt(element.style.width)*total/timelineWidth;
+		console.log(element.id + ', left='+ element.style.left+', delay='+delay+', duration='+duration);
+		animateId = element.id.replace('Element','');
+		aniGroupId = element.parentNode.id.replace('Element','');
+		nodeId = animateId.replace('ani','').toLowerCase();
+		AniPlay.updateAnimation(aniGroupId, nodeId, animateId, duration, delay);
+	}
+
+	var rightKeyFrameHandler = function(deliagtor, oEvent){
+		if(typeof deliagtor.kfTarget === 'object'){
+			var element = deliagtor.kfTarget;
+			var parent = element.parentNode;
+			var delta = oEvent.clientX - element.clientXStart;
+			element.clientXStart = oEvent.clientX;
+			parent.style.width = parseInt(parent.style.width) + parseInt(delta) + 'px';
+			updateTimeline(parent);
+		}
+	}
+
+	timelineBG.addEventListener('mousemove', function(oEvent){
+		rightKeyFrameHandler(this, oEvent);
+	});
+	timelineBG.addEventListener('drag', function(oEvent){
+		rightKeyFrameHandler(this, oEvent);
+	});
+	timelineBG.addEventListener('dragover', function(oEvent){
+		oEvent.preventDefault();
+	});
+	timelineBG.addEventListener('drop', function(oEvent){
+		this.kfTarget = '';
+	});
+	timelineBG.addEventListener('mouseup', function(oEvent){
+		this.kfTarget = '';
+	});
+
+	//when model loaded
+	window.addEventListener(AniPlay.LOAD_PLAY_MODEL, function(oEvent){
+		AniPlay.logger.event(AniPlay.LOAD_PLAY_MODEL);
+		AniPlay.dom.setStyles(timelineBG,{width:AniPlay.dom.getStyle(scrollBG,'width')});
+		var i, aniGroup, timelineGeo,
+			list="",
+			timeline="",
+			groups = AniPlay.getAniGroups(AniPlay.getCurrentPage());
+		for(i in groups){
+			aniGroups.push(groups[i].id);
+			aniGroup = groups[i];
+			makeCssPanel('#'+aniGroup.id);
+
+			if(aniGroup.action.totalDuration > maxDuration){
+				maxDuration = aniGroup.action.totalDuration;
+			}
+
+			(function(){
+
+				//list
+				var listContainer = AniPlay.dom.makeElement('div', 
+					{className : 'aniGroup'},
+					{element : aniListBG, position : 'inside'}
+				);
+
+				var listAniGroupElement = AniPlay.dom.makeElement('div', 
+					{className : 'animation group',
+						innerHTML : aniGroup.id+' Group'},
+					{element : listContainer, position : 'inside'}
+				);
+				listAniGroupElement.dataset.nodeId = aniGroup.id;
+
+				AniPlay.dom.addEvent(listAniGroupElement, 'click', function(oEvent){
+					focusElement(oEvent.target);
+				});
+
+				//timelines
+				var timelineContainer = AniPlay.dom.makeElement('div', 
+					{id : aniGroup.id+'Element', className : 'aniGroup'},
+					{element : timelineBG, position : 'inside'}
+				);
+
+				var timelineGeo = getTimelineGeometry(aniGroup.action);
+				var timelineAniGroupElement = AniPlay.dom.makeElement('div', 
+					{id : aniGroup.id+'ActionElement',
+						className : 'animation group',
+						innerHTML : aniGroup.action.id},
+					{element : timelineContainer, position : 'inside'}
+				);
+				timelineAniGroupElement.style.left = timelineGeo.left;
+				timelineAniGroupElement.style.width = timelineGeo.width;
+
+				for(nodeId in aniGroup.pairs){
+					node = AniPlay.Registry.getObjectById(nodeId,'Node');
+					animate = aniGroup.pairs[nodeId];
+					if(node && animate){
+
+						if(!activeNodeId){
+							activeNodeId = node.id;
+							$('#cssTitle')[0].innerHTML = 'CSS :: '+activeNodeId;
+							$('#'+node.id)[0].className += ' activeNodeId';
+						}
+
+						makeCssPanel('#'+node.id);
+						(function(){
+
+							var listAniElement = AniPlay.dom.makeElement('div', 
+								{className : 'animation',
+									innerHTML : node.id+"<span id='"+node.id+"Eye' class='eye on'>@</span>"},
+								{element : listContainer, position : 'inside'}
+							);
+							listAniElement.dataset.nodeId = node.id;
+
+							AniPlay.dom.addEvent($('#'+node.id+'Eye')[0], 'click', function(oEvent){
+								var eye = oEvent.target;
+								var elementId = oEvent.target.id.replace('Eye','');
+								if(eye.className=='eye on'){
+									eye.className = 'eye off';
+									AniPlay.setVisible(elementId, false);
+								}else{
+									eye.className = 'eye on';
+									AniPlay.setVisible(elementId, true);
+								}
+								oEvent.stopPropagation();
+							});
+
+							AniPlay.dom.addEvent(listAniElement, 'click', function(oEvent){
+								focusElement(oEvent.target);
+							});
+
+							var timelineGeo = getTimelineGeometry(animate);
+
+							var timelineAniElement = AniPlay.dom.makeElement('div', 
+								{id : animate.id+'Element',
+									className : 'animation',
+									innerHTML : animate.id},
+								{element : timelineContainer, position : 'inside'}
+							);
+
+
+
+
+
+							var timelineAniRightHandle = AniPlay.dom.makeElement('div', 
+								{id : animate.id+'RightHandle',
+									className : 'keyframe',
+									draggable : false},
+								{element : timelineAniElement, position : 'inside'}
+							);
+							timelineAniRightHandle.addEventListener('mousedown', function(oEvent){
+								timelineBG.kfTarget = oEvent.target;
+								this.clientXStart = oEvent.clientX;
+							});
+							timelineAniRightHandle.addEventListener('mouseup', function(oEvent){
+								timelineBG.kfTarget = '';
+							});
+
+
+
+
+
+							timelineAniElement.addEventListener('mousedown', function(oEvent){
+								var element = oEvent.target;
+								element.clientXStart = oEvent.clientX;
+								element.isMoveMouse = true;
+								//oEvent.stopPropagation();
+							});
+							timelineAniElement.addEventListener('mouseup', function(oEvent){
+								var element = oEvent.target;
+								element.isMoveMouse = false;
+								//oEvent.stopPropagation();
+							});
+							timelineAniElement.addEventListener('mousemove', function(oEvent){
+								var element = oEvent.target;
+								if(element.isMoveMouse===true){
+									var delta = oEvent.clientX - element.clientXStart;
+									element.clientXStart = oEvent.clientX;
+									var left = (parseInt(element.style.left) + delta);
+									if(left >= 0){
+										element.style.left = parseInt(element.style.left) + delta + 'px';
+										updateTimeline(element);
+									}
+								}
+								//oEvent.stopPropagation();
+							});
+
+							timelineAniElement.style.left = timelineGeo.left;
+							timelineAniElement.style.width = timelineGeo.width;
+
+						})();
+					}
+				}
+
+			})();
+
+		}
+	});
+
+	var resetPlayButton = function(){
+		play.className = '';
+		play.innerHTML = '▶';
+	};
+
+	start.addEventListener('click', function(oEvent){
+		var ratio = 0;
+		var ms = total*ratio;
+		AniPlay.setCurrentTime(ms,aniGroups);
+		scrollButton.style.width = timelineWidth*ratio+'px';
+		currentTime.innerHTML = parseInt(ratio*100) +'% ('+ parseInt(ms)+' ms)';
+		resetPlayButton();
+	});
+
+	play.addEventListener('click', function(oEvent){
+		if(play.className==='run'){
+			resetPlayButton();
+			AniPlay.pauseCurrentPage();
+		}else{
+			play.className = 'run';
+			play.innerHTML = '||';
+			AniPlay.playAllAniGroups(AniPlay.movie.currentScene);
+		}
+	});
+
+	end.addEventListener('click', function(oEvent){
+		var ratio = maxDuration/total;
+		var ms = total*ratio;
+		AniPlay.setCurrentTime(ms,aniGroups);
+		scrollButton.style.width = timelineWidth*ratio+'px';
+		currentTime.innerHTML = parseInt(ratio*100) +'% ('+ parseInt(ms)+' ms)';
+		resetPlayButton();
+	});
+
+	scrollButton.addEventListener('mousedown', function(oEvent){
+		oEvent.preventDefault();
+		//oEvent.stopPropagation();
+	});
+	scrollButton.addEventListener('mousemove', function(oEvent){
+		oEvent.preventDefault();
+		//oEvent.stopPropagation();
+	});
+
+	scrollBG.addEventListener('mousedown', function(oEvent){
+		isMoveMouse = true;
+		moveMouse(oEvent);
+	});
+	scrollBG.addEventListener('mouseup', function(oEvent){
+		isMoveMouse = false;
+		this.onmousemove = null;
+	});
+	scrollBG.addEventListener('mousemove', function(oEvent){
+		moveMouse(oEvent);
+	});
+	moveMouse = function(oEvent){
+		var offsetX;
+		if(isMoveMouse===true){
+			offsetX = parseInt(oEvent.pageX) - parseInt(AniPlay.dom.getStyle(scrollBG,'left'));
+			scrollButton.style.width = offsetX+'px';
+			var ratio =  offsetX/parseInt(AniPlay.dom.getStyle(scrollBG,'width'));
+			//console.log('oEvent.pageX = '+oEvent.pageX);
+			//console.log(ratio);
+			//setTime(3*percent);
+			var ms = total*ratio;
+			currentTime.innerHTML = parseInt(ratio*100) +'% ('+ parseInt(ms)+' ms)';
+			AniPlay.setCurrentTime(ms,aniGroups);
+			resetPlayButton();
+		}
+	};
+	document.addEventListener(AniPlay.ANI_GROUP_TIME_UPDATE, function(oEvent){
+		//console.log(oEvent.bundle.currentTime);
+		var ratio = oEvent.bundle.currentTime/total;
+		var ms = total*ratio;
+		scrollButton.style.width = timelineWidth*ratio+'px';
+		currentTime.innerHTML = parseInt(ratio*100) +'% ('+ parseInt(ms)+' ms)';
+	});
+	document.addEventListener(AniPlay.ALL_ANI_GROUP_STOP, function(oEvent){
+		//AniPlay.setCurrentTime(0, 'anim1');
+		//TODO : need to be solved
+		resetPlayButton();
+	});
+
+	document.addEventListener(AniPlay.ANI_GROUP_DURATION_UPDATE, function(oEvent){
+		var ratioWidth = parseFloat(oEvent.bundle.duration)*1000/total;
+		$('#'+oEvent.bundle.id+'ActionElement')[0].style.width = timelineWidth*ratioWidth+'px';
+	});
+
+	document.addEventListener(AniPlay.SET_TIME, function(oEvent){
+		AniPlay.logger.event(AniPlay.SET_TIME+', selector='+oEvent.bundle.selector+', left='+JSON.stringify(oEvent.bundle.css.left)+', currentTime='+oEvent.bundle.currentTime);
+		var id = oEvent.bundle.selector.replace('#','');
+		if(activeNodeId===id){
+			var p, result='', diff='';
+			for(p in oEvent.bundle.css){
+				result += p+' : '+oEvent.bundle.css[p]+'<br />';
+			}
+			if(typeof beforeCss == 'object'){
+				if(oEvent.bundle.css['z-index']==='auto'){
+					oEvent.bundle.css['z-index'] = 0;
+				}
+				var diffs = AniPlay.dom.getComputedStyleDiff(beforeCss, oEvent.bundle.css);
+				//console.log('diffs', diffs);
+				for(p in diffs){
+					diff += p+' : '+diffs[p]+'<br />';
+				}
+				$('#cssDiff '+oEvent.bundle.selector)[0].innerHTML = diff;
+			}
+			beforeCss = oEvent.bundle.css;
+			$('#cssPanel '+oEvent.bundle.selector)[0].innerHTML = result;
+		}
+
+	});
+
+/*
+	setTimeout(function(){
+		AniPlay.playAniGroupsById('page1', 'anim1');
+	},2000);
+
+	setTimeout(function(){
+		AniPlay.playAniGroupsById('page1', 'anim2');
+	},8000);
+*/
+
+	setTimeout(function(){
+		//jQuery('#page1').trigger('pageshow');
+	},2000);
+
+	page1.addEventListener('click', function(){
+		jQuery('#page1').hide();
+		jQuery('#page2').show();
+		jQuery('#page2').trigger('pageshow');
+	});
+
+});
+</script>
+</body>
+</html>

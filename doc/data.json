@@ -1,0 +1,772 @@
+{
+    "project": {
+        "name": "API Doc",
+        "description": "These are set of facade functions of inner modules",
+        "version": "0.2",
+        "url": "http://www.s-core.co.kr/"
+    },
+    "files": {
+        "..\\..\\proxy\\wub\\AniPlay.js": {
+            "name": "..\\..\\proxy\\wub\\AniPlay.js",
+            "modules": {},
+            "classes": {
+                "AniPlay": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "AniPlay": {
+            "name": "AniPlay",
+            "shortname": "AniPlay",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 17,
+            "description": "Users can see this object only.\nThese are set of facade functions of inner modules."
+        }
+    },
+    "classitems": [
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 59,
+            "description": "Update animation at runtime.\nThis fire ANI_GROUP_DURATION_UPDATE event. See ANI_GROUP_DURATION_UPDATE.",
+            "itemtype": "method",
+            "name": "updateAnimation",
+            "example": [
+                "\n\tAniPlay.updateAnimation('anim1', 'image1', 'aniImage1', 1000, 2062.5);"
+            ],
+            "params": [
+                {
+                    "name": "aniGroupId",
+                    "description": "aniGroup' id",
+                    "type": "String"
+                },
+                {
+                    "name": "nodeId",
+                    "description": "animation's target node id",
+                    "type": "String"
+                },
+                {
+                    "name": "animateId",
+                    "description": "animation's id",
+                    "type": "String"
+                },
+                {
+                    "name": "duration",
+                    "description": "duration (miliseconds)",
+                    "type": "Float"
+                },
+                {
+                    "name": "delay",
+                    "description": "delay (miliseconds)",
+                    "type": "Float"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 104,
+            "description": "You should call this method when you add new Animation to a widget.\nThis will detect css of start position.",
+            "itemtype": "method",
+            "name": "applyAnimation",
+            "example": [
+                "\n\tAniPlay.applyAnimation('image1', 'aniImage1');"
+            ],
+            "params": [
+                {
+                    "name": "nodeId",
+                    "description": "animation's target node id",
+                    "type": "String"
+                },
+                {
+                    "name": "animateId",
+                    "description": "animation's id",
+                    "type": "String"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 121,
+            "description": "Loads animation model.",
+            "itemtype": "method",
+            "name": "loadPlayModel",
+            "example": [
+                "\n\tAniPlay.loadPlayModel(animator_cfg);"
+            ],
+            "params": [
+                {
+                    "name": "config",
+                    "description": "configuration object (aka model).",
+                    "type": "Object"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 180,
+            "description": "Gets animation groups from Scene object.",
+            "itemtype": "method",
+            "name": "getAniGroups",
+            "example": [
+                "\n\tAniPlay.getAniGroups(scene1);"
+            ],
+            "params": [
+                {
+                    "name": "scene",
+                    "description": "Scene instance",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "[AniGroups]",
+                "type": "Array"
+            },
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 199,
+            "description": "Gets animation groups from Scene object by state.",
+            "itemtype": "method",
+            "name": "getGroupsByState",
+            "example": [
+                "\n\tAniPlay.getGroupsByState(scene1);"
+            ],
+            "params": [
+                {
+                    "name": "scene",
+                    "description": "Scene instance",
+                    "type": "Object"
+                },
+                {
+                    "name": "state",
+                    "description": "'run' | 'pause' | 'stop'",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "[AniGroups]",
+                "type": "Array"
+            },
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 223,
+            "description": "Gets animation groups from Registry by id(s).",
+            "itemtype": "method",
+            "name": "getGroupsById",
+            "example": [
+                "\n\tAniPlay.getGroupsById('Anim1');\n\tAniPlay.getGroupsById(['Anim1','Anim2']);"
+            ],
+            "params": [
+                {
+                    "name": "ids",
+                    "description": "",
+                    "type": "Mixed"
+                }
+            ],
+            "return": {
+                "description": "[AniGroups]",
+                "type": "Array"
+            },
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 247,
+            "description": "Gets animation groups to be play automatically.",
+            "itemtype": "method",
+            "name": "getJustPlayGroups",
+            "example": [
+                "\n\tAniPlay.getJustPlayGroups(scene1);"
+            ],
+            "params": [
+                {
+                    "name": "scene",
+                    "description": "Scene instance",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "[AniGroups]",
+                "type": "Array"
+            },
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 267,
+            "description": "Gets current active page.",
+            "itemtype": "method",
+            "name": "getCurrentPage",
+            "example": [
+                "\n\tAniPlay.getCurrentPage();"
+            ],
+            "return": {
+                "description": "scene Scene instance",
+                "type": "Object"
+            },
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 280,
+            "description": "Plays all animation groups of current active page.",
+            "itemtype": "method",
+            "name": "playCurrentPage",
+            "example": [
+                "\n\tAniPlay.playCurrentPage();"
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 292,
+            "description": "Plays animation groups of page by Scene object (autoPlay true case only).",
+            "itemtype": "method",
+            "name": "playPage",
+            "example": [
+                "\n\tAniPlay.playPage(scene1);"
+            ],
+            "params": [
+                {
+                    "name": "scene",
+                    "description": "Scene instance",
+                    "type": "Object"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 305,
+            "description": "Plays all animation groups of page by pageId",
+            "itemtype": "method",
+            "name": "playPageById",
+            "example": [
+                "\n\tAniPlay.playPageById('page1');"
+            ],
+            "params": [
+                {
+                    "name": "pageId",
+                    "description": "page's id.",
+                    "type": "String"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 318,
+            "description": "Plays all animation groups of page by Scene object.",
+            "itemtype": "method",
+            "name": "playAllAniGroups",
+            "example": [
+                "\n\tAniPlay.playAllAniGroups(scene1);"
+            ],
+            "params": [
+                {
+                    "name": "scene",
+                    "description": "Scene instance",
+                    "type": "Object"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 331,
+            "description": "Plays animation groups on a page.",
+            "itemtype": "method",
+            "name": "playAniGroups",
+            "example": [
+                "\n\tAniPlay.playAniGroups(scene1, [aniGroup1, aniGroup2]);"
+            ],
+            "params": [
+                {
+                    "name": "scene",
+                    "description": "Scene instance.",
+                    "type": "Object"
+                },
+                {
+                    "name": "aniGroups",
+                    "description": "Array of AniGroup instances.",
+                    "type": "Array"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 368,
+            "description": "Plays animation groups on a page.",
+            "itemtype": "method",
+            "name": "playAniGroupsById",
+            "example": [
+                "\n\tAniPlay.playAniGroupsById('page1', 'Anim1');\n\tAniPlay.playAniGroupsById('page1', ['Anim1', 'Anim2']);"
+            ],
+            "params": [
+                {
+                    "name": "pageId",
+                    "description": "page's id.",
+                    "type": "String"
+                },
+                {
+                    "name": "aniGroupIds",
+                    "description": "The animation groups' ids.",
+                    "type": "Mixed"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 385,
+            "description": "Pauses current page's all animation group(s).",
+            "itemtype": "method",
+            "name": "pauseCurrentPage",
+            "example": [
+                "\n\tAniPlay.pauseCurrentPage();"
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 397,
+            "description": "Pauses running animation group(s) of a page.",
+            "itemtype": "method",
+            "name": "pausePage",
+            "example": [
+                "\n\tAniPlay.pausePage(scene1);"
+            ],
+            "params": [
+                {
+                    "name": "scene",
+                    "description": "Scene instance",
+                    "type": "Object"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 410,
+            "description": "Pauses running animation group(s) of a page by pageId.",
+            "itemtype": "method",
+            "name": "pausePageById",
+            "example": [
+                "\n\tAniPlay.pausePageById('page1');"
+            ],
+            "params": [
+                {
+                    "name": "pageId",
+                    "description": "page's id.",
+                    "type": "String"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 423,
+            "description": "Pauses animation group(s) on a page.",
+            "itemtype": "method",
+            "name": "pauseAniGroups",
+            "example": [
+                "\n\tAniPlay.pauseAniGroups(scene1, [aniGroup1, aniGroup2]);"
+            ],
+            "params": [
+                {
+                    "name": "scene",
+                    "description": "Scene instance.",
+                    "type": "Object"
+                },
+                {
+                    "name": "aniGroups",
+                    "description": "Array of AniGroup instances.",
+                    "type": "Array"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 444,
+            "description": "Pauses animation group(s) on a page by Ids.",
+            "itemtype": "method",
+            "name": "pauseAniGroupsById",
+            "example": [
+                "\n\tAniPlay.pauseAniGroupsById('page1', 'Anim1');\n\tAniPlay.pauseAniGroupsById('page1', ['Anim1', 'Anim2']);"
+            ],
+            "params": [
+                {
+                    "name": "pageId",
+                    "description": "page's id.",
+                    "type": "String"
+                },
+                {
+                    "name": "aniGroupIds",
+                    "description": "The animation groups' ids.",
+                    "type": "Mixed"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 461,
+            "description": "Stops current page's all animation group(s).",
+            "itemtype": "method",
+            "name": "stopCurrentPage",
+            "example": [
+                "\n\tAniPlay.stopCurrentPage();"
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 473,
+            "description": "Stops all the animation group(s) of a page.",
+            "itemtype": "method",
+            "name": "stopPage",
+            "example": [
+                "\n\tAniPlay.stopPage(scene1);"
+            ],
+            "params": [
+                {
+                    "name": "scene",
+                    "description": "Scene instance",
+                    "type": "Object"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 486,
+            "description": "Stops all the animation group(s) of a page by pageId.",
+            "itemtype": "method",
+            "name": "stopPageById",
+            "example": [
+                "\n\tAniPlay.stopPageById('page1');"
+            ],
+            "params": [
+                {
+                    "name": "pageId",
+                    "description": "page's id.",
+                    "type": "String"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 499,
+            "description": "Stops animation group(s) on a page.",
+            "itemtype": "method",
+            "name": "stopAniGroups",
+            "example": [
+                "\n\tAniPlay.stopAniGroups(scene1, [aniGroup1, aniGroup2]);"
+            ],
+            "params": [
+                {
+                    "name": "scene",
+                    "description": "Scene instance.",
+                    "type": "Object"
+                },
+                {
+                    "name": "aniGroups",
+                    "description": "Array of AniGroup instances.",
+                    "type": "Array"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 516,
+            "description": "Stops animation group(s) on a page by ids.",
+            "itemtype": "method",
+            "name": "stopAniGroupsById",
+            "example": [
+                "\n\tAniPlay.stopAniGroupsById('page1', 'Anim1');\n\tAniPlay.stopAniGroupsById('page1', ['Anim1', 'Anim2']);"
+            ],
+            "params": [
+                {
+                    "name": "pageId",
+                    "description": "page's id.",
+                    "type": "String"
+                },
+                {
+                    "name": "aniGroupIds",
+                    "description": "The animation groups' ids.",
+                    "type": "Mixed"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 533,
+            "description": "Go to first frame of (a) aniGroup(s) in the current page(Scene).\nThis will dispatch AniPlay.SET_TIME ('setTime') event to the elements of the group.",
+            "itemtype": "method",
+            "name": "goToStartFrame",
+            "example": [
+                "\n\tAniPlay.goToStartFrame('Anim1');\n\tAniPlay.goToStartFrame(['Anim1', 'Anim2']);"
+            ],
+            "params": [
+                {
+                    "name": "groupIds",
+                    "description": "The animation group id(s).",
+                    "type": "Mixed",
+                    "optional": true
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 557,
+            "description": "Moves animations to a specific time. If you omit groupId, all AniGroups will be moved.",
+            "itemtype": "method",
+            "name": "setCurrentTime",
+            "example": [
+                "\n\tAniPlay.setCurrentTime(2500);\n\tAniPlay.setCurrentTime(2500, 'Anim1');\n\tAniPlay.setCurrentTime(2500, ['Anim1','Anim2']);"
+            ],
+            "params": [
+                {
+                    "name": "msec",
+                    "description": "The milisecond time to move.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "groupIds",
+                    "description": "The animation group id(s).",
+                    "type": "Mixed",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "CSS Properties of the contained widgets.",
+                "type": "Object"
+            },
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 583,
+            "description": "Get css from animation group",
+            "itemtype": "method",
+            "name": "getCssByGroupId",
+            "example": [
+                "\n\tAniPlay.getCssByGroupId('Anim1');\n\tAniPlay.getCssByGroupId(['Anim1','Anim2']);"
+            ],
+            "params": [
+                {
+                    "name": "groupIds",
+                    "description": "The animation group id(s).",
+                    "type": "Mixed",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "CSS Properties of the contained widgets by setTime event.",
+                "type": "Object"
+            },
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 607,
+            "description": "Sets widget element's visibility",
+            "itemtype": "method",
+            "name": "setVisible",
+            "example": [
+                "\n\tAniPlay.setVisible('image1', true);"
+            ],
+            "params": [
+                {
+                    "name": "nodeId",
+                    "description": "animation's target node id",
+                    "type": "String"
+                },
+                {
+                    "name": "isVisible",
+                    "description": "true to visible, false to hidden",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 623,
+            "description": "When an aniGroup start, this event will be fired on an animation group element(invisible).",
+            "itemtype": "event",
+            "name": "ANI_GROUP_START",
+            "bubbles": "true",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "As a result, event object's bundle object would contain Object similar to this\n : {aniGroupId: \"Anim1\", animateId: \"Anim1\"}",
+                    "type": "Event"
+                }
+            ],
+            "value": "{String} 'aniGroupStart'",
+            "example": [
+                "\n\tdocument.addEventListener(AniPlay.ANI_GROUP_START, function(oEvent){console.log(oEvent.bundle);});"
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 636,
+            "description": "When an aniGroup iteration start, this event will be fired on an animation group element(invisible).",
+            "itemtype": "event",
+            "name": "ANI_GROUP_ITERATION",
+            "bubbles": "true",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "As a result, event object's bundle object would contain Object similar to this\n : {aniGroupId: \"Anim1\", animateId: \"Anim1\"}",
+                    "type": "Event"
+                }
+            ],
+            "value": "{String} 'aniGroupIteration'",
+            "example": [
+                "\n\tdocument.addEventListener(AniPlay.ANI_GROUP_ITERATION, function(oEvent){console.log(oEvent.bundle);});"
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 649,
+            "description": "When an aniGroup end, this event will be fired on an animation group element(invisible).",
+            "itemtype": "event",
+            "name": "ANI_GROUP_END",
+            "bubbles": "true",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "As a result, event object's bundle object would contain Object similar to this\n : {aniGroupId: \"Anim1\", animateId: \"Anim1\"}",
+                    "type": "Event"
+                }
+            ],
+            "value": "{String} 'aniGroupEnd'",
+            "example": [
+                "\n\tdocument.addEventListener(AniPlay.ANI_GROUP_END, function(oEvent){console.log(oEvent.bundle);});"
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 662,
+            "description": "The stop event is called when aniGroup's animation ended or an user stops aniGroup's animation.\nThis event would be dispatched after AniPlay.ANI_GROUP_END event.",
+            "itemtype": "event",
+            "name": "ANI_GROUP_STOP",
+            "bubbles": "true",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "As a result, event object's bundle object would contain Object similar to this\n : {aniGroupId: \"Anim1\", animateId: \"Anim1\"}",
+                    "type": "Event"
+                }
+            ],
+            "value": "{String} 'aniGroupStop'",
+            "example": [
+                "\n\tdocument.addEventListener(AniPlay.ANI_GROUP_STOP, function(oEvent){console.log(oEvent.bundle);});"
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 676,
+            "description": "Called when all the aniGroup's animation has been ended.",
+            "itemtype": "event",
+            "name": "ALL_ANI_GROUP_STOP",
+            "bubbles": "true",
+            "value": "{String} 'allAniGroupStop'",
+            "example": [
+                "\n\tdocument.addEventListener(AniPlay.ALL_ANI_GROUP_STOP, function(oEvent){console.log(oEvent);});"
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 687,
+            "description": "Called when AniGroup instance's setCurrentTime() method is called.\nEvent Object has a bundle object that contains selector name, css collection of the element\nand currentTime of the Animate Class instance. See examples.",
+            "itemtype": "event",
+            "name": "SET_TIME",
+            "bubbles": "true",
+            "value": "{String} 'setTime'",
+            "example": [
+                "\n\tdocument.addEventListener(AniPlay.SET_TIME, function(oEvent){console.log(oEvent.bundle);});\n\tdocument.addEventListener(\n\t\tAniPlay.SET_TIME, function(oEvent){\n\t\t\tconsole.log(oEvent.bundle.selector, JSON.stringify(oEvent.bundle.css), oEvent.bundle.currentTime);\n\t});"
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 704,
+            "description": "Called when an aniGroup is playing",
+            "itemtype": "event",
+            "name": "ANI_GROUP_TIME_UPDATE",
+            "bubbles": "true",
+            "value": "{String} 'aniGroupTimeUpdate'",
+            "example": [
+                "\n\tdocument.addEventListener(AniPlay.ANI_GROUP_TIME_UPDATE, function(oEvent){\n\t\tconsole.log(oEvent.bundle);\n\t\t//{id: \"anim2\", currentTime: 5379} \n\t});"
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 718,
+            "description": "Called when an aniGroup duration changed by sub animation.",
+            "itemtype": "event",
+            "name": "ANI_GROUP_DURATION_UPDATE",
+            "bubbles": "true",
+            "value": "{String} 'aniGroupDurationUpdate'",
+            "example": [
+                "\n\tdocument.addEventListener(AniPlay.ANI_GROUP_DURATION_UPDATE, function(oEvent){\n\t\tconsole.log(oEvent.bundle);\n\t\t//{id:'aniGroup1', duration: 2100} \n\t});"
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 732,
+            "description": "Called when the AniPlay Framework is ready to use.\nYou must use String 'aniPlayReady' rather than constant AniPlay.ANI_PLAY_READY\nbecause of AMD issue (Require.js loads modules asynchronously).",
+            "itemtype": "event",
+            "name": "ANI_PLAY_READY",
+            "bubbles": "true",
+            "value": "{String} 'aniPlayReady'",
+            "example": [
+                "\n\twindow.addEventListener('aniPlayReady', function(oEvent){console.log(oEvent.bundle);});"
+            ],
+            "class": "AniPlay"
+        },
+        {
+            "file": "..\\..\\proxy\\wub\\AniPlay.js",
+            "line": 745,
+            "description": "Called when the new animation config loaded.",
+            "itemtype": "event",
+            "name": "LOAD_PLAY_MODEL",
+            "bubbles": "true",
+            "value": "{String} 'loadPlayModel'",
+            "example": [
+                "\n\twindow.addEventListener(AniPlay.LOAD_PLAY_MODEL, function(oEvent){\n\t\tconsole.log(oEvent.bundle);\n\t\t//{movie: Movie Node Object} \n\t});"
+            ],
+            "class": "AniPlay"
+        }
+    ],
+    "warnings": []
+}

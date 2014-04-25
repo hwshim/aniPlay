@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset=utf-8 />
+	<title>AniPlay Animator Framework</title>
+	<style>
+		body {
+			font-size: 1em;
+			font-family: Malgun Gothic;
+			color: #1a1a1a;
+			font-weight: bold;
+			overflow: hidden;
+		}
+		.red {
+			color:#EE6E3B;
+		}
+		.blue {
+			color:#56A5EC;
+		}
+		.center {
+			text-align:center;
+		}
+		.comment {
+			font-family: Malgun Gothic;
+			color: #3CB8B5;
+		}
+		a {
+			color: #006DBA
+		}
+		a:hover {
+			color: #006DBA
+		}
+		table {
+			border-spacing: 0;
+			border-collapse: collapse;
+			background-color: #fff;
+			width: 90%;
+		}
+		table > caption {
+			font-size: 2.3em;
+			text-align: left;
+			margin-top: 40px;
+			margin-bottom: 20px
+		}
+		th, td {
+			font-size: 1.8em;
+			border: 1px solid #666;
+			padding: 8px
+		}
+		th {
+			background-color: #eee
+		}
+		td {
+			text-align: center
+		}
+		td.desc {
+			text-align: left
+		}
+		h1 {
+			font-size: 3.5em;
+			border-bottom: 7px solid #000;
+			padding-bottom: 30px;
+			padding-left: 50px;
+		}
+		h1 sup {
+			font-size: 0.5em;
+		}
+		div#wrap {
+			position: absolute;
+			top:0;left:0;bottom:0;right:0;
+		}
+		div.section {
+			position: absolute;
+			top:0;left:0;bottom:0;right:0;
+			display: none;
+		}
+		div.main_title {
+			padding-top: 25%;
+			text-align: center;
+			font-size: 7em;
+		}
+		div.article {
+			padding: 5px 20px 20px 150px;
+		}
+		div.article ul, div.article ol {
+			border: 0px solid red;
+			width: 0 auto;
+			font-size: 3.2em;
+			line-height: 190%;
+			font-weight: bold;
+		}
+		div.article ul {
+			list-style: inside;
+		}
+		div.article ul.dense {
+			line-height: 170%;
+		}
+		div.article ol {
+			padding-left: 100px;
+		}
+		div.article ol.toc {
+			list-style: decimal;
+			line-height: 160%;
+			font-size: 3.3em;
+		}
+		div.article li {
+			font-size: 0.7em;
+			font-weight: bold;
+		}
+		div.article code, div.article pre {
+			display: block;
+			font-family: 'Consolas';
+			font-size: 3.3em;
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+		div.article pre {
+			padding: 0;
+		}
+		div.article pre .comment {
+			font-size: 0.7em;
+		}
+		div.article pre.mid {
+			font-size: 3em;
+			padding: 0;
+		}
+		div.article pre.small {
+			font-size: 2.1em;
+			padding: 0;
+			line-height: 120%;
+		}
+		div.article div.comment {
+			font-size: 2.3em;
+			padding-top: 10px;
+			padding-bottom: 40px;
+		}
+		div#guide {
+			background-color: #3CB8B5;
+			border-radius: 4px;
+			color: #fff;
+			font-size: 2em;
+			width: 20%;
+			margin-top: 130px;
+			margin-left: 37%;
+			padding: 25px 20px 30px 20px;
+			display: none;
+		}
+		#shape1 {
+			position: absolute;
+			top: 300px;
+			left: 200px;
+			padding: 50px;
+			background-color: skyblue;
+		}
+		#currentTime {
+			position: absolute;
+			top: 77%;
+			left: 200px;
+			font-size: 1.9em;
+			padding: 5px 10px;
+		}
+		#scrollBG {
+			position: absolute;
+			top: 70%;
+			left: 200px;
+			background-color: #ddd;
+			width: 800px;
+			height: 60px;
+			background-image: url(img/bg_unit.gif);
+			background-repeat: repeat-x;
+		}
+		#scrollBG #scrollButton {
+			position: relative;
+			background-color: #333;
+			width: 0px;
+			height: 60px;
+			cursor: pointer;
+			opacity: 0.5;
+			z-index: 10;
+			border-right: 1px solid #F62817;
+		}
+	</style>
+	<style>
+		@-webkit-keyframes hideToBottom {
+			0% {
+				-webkit-transform:translate(0px,0px);
+				opacity: 1;
+			}
+			100% {
+				-webkit-transform:translate(0px,-2000px);
+				opacity: 0;
+			}
+		}
+		@-webkit-keyframes hideToRight {
+			0% {
+				-webkit-transform:translate(0px,0px);
+				opacity: 1;
+			}
+			100% {
+				-webkit-transform:translate(2000px,0px);
+				opacity: 0;
+			}
+		}
+		@-webkit-keyframes hideZoom {
+			0% {
+				-webkit-transform:scale(1,1);
+				opacity: 0;
+			}
+			100% {
+				-webkit-transform:scale(0,0);
+				opacity: 1;
+			}
+		}
+		@-webkit-keyframes showFromLeft {
+			0% {
+				-webkit-transform:translate(-2000px,0px);
+				opacity: 0;
+			}
+			100% {
+				-webkit-transform:translate(0px,0px);
+				opacity: 1;
+			}
+		}
+		@-webkit-keyframes showFromTop {
+			0% {
+				-webkit-transform:translate(0px,2000px);
+				opacity: 0;
+			}
+			100% {
+				-webkit-transform:translate(0px,0px);
+				opacity: 1;
+			}
+		}
+		@-webkit-keyframes showZoom {
+			0% {
+				-webkit-transform:scale(0,0);
+				opacity: 0;
+			}
+			100% {
+				-webkit-transform:scale(1,1);
+				opacity: 1;
+			}
+		}
+		@-webkit-keyframes fadeIn {
+			0% {
+				opacity: 0;
+			}
+			100% {
+				opacity: 1;
+			}
+		}
+		@-webkit-keyframes fadeOut {
+			0% {
+				opacity: 1;
+			}
+			100% {
+				opacity: 0;
+			}
+		}
+		@-webkit-keyframes bounce {
+			0% {
+				top: 300px;
+				left: 200px;
+			}
+			50% {
+				top: 550px;
+				left: 400px;
+			}
+			100% {
+				top: 200px;
+				left: 800px;
+				-webkit-transform: rotate(180deg);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+
+		<div class="section center">
+			<div class='main_title'>
+				AniPlay Animator Framework
+			</div>
+			<div id='guide'>
+				좌우 방향키로 이동
+			</div>
+		</div>
+
+		<div class="section">
+			<h1>Table of Contents</h1>
+			<div class='article'>
+				<ol class='toc'>
+					<li>Introduction</li>
+					<li>Structure</li>
+					<li>APIs</li>
+					<li>Nodes & Shapes</li>
+					<li>Node & Animation</li>
+					<li>Animation Group</li>
+					<li>setCurrentTime</li>
+					<li>Comparison & Evolution</li>
+				</ol>
+			</div>
+		</div>
+
+		<div class="section">
+			<h1>1. Introduction</h1>
+			<div class='article'>
+				<ul>
+					<li>HTML5 Game Engine <span class="comment">(Cocos2D, Unity3D)</span></li>
+					<li>Adobe Flash, Edge Animate CC</li>
+					<li>AniPlay Web UI Builder</li>
+					<li>Easy porting <span class="comment">(Independent libs)</span></li>
+					<li>AMD Module loader <span class="comment">(require.js)</span></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="section">
+			<h1>2. Structure</h1>
+			<div class='article'><br /><br />
+				<img src='img/class_diagram.png' />
+			</div>
+		</div>
+
+		<div class="section">
+			<h1>3. APIs</h1>
+			<div class='article'>
+				<table>
+					<caption>Methods</caption>
+					<tbody>
+					<tr>
+					<td>applyAnimation</td>
+					<td>getAniGroups</td>
+					<td>getCssByGroupId</td>
+					<td>getCurrentPage</td>
+					</tr>
+					<tr>
+					<td>getGroupsById</td>
+					<td>getGroupsByState</td>
+					<td>getJustPlayGroups</td>
+					<td>goToStartFrame</td>
+					</tr>
+					<tr>
+					<td>loadPlayModel</td>
+					<td>pauseAniGroups</td>
+					<td>pauseAniGroupsById</td>
+					<td>pauseCurrentPage</td>
+					</tr>
+					<tr>
+					<td>pausePage</td>
+					<td>pausePageById</td>
+					<td>playAllAniGroups</td>
+					<td>playAniGroups</td>
+					</tr>
+					<tr>
+					<td>playAniGroupsById</td>
+					<td>playCurrentPage</td>
+					<td>playPage</td>
+					<td>playPageById</td>
+					</tr>
+					<tr>
+					<td>setCurrentTime</td>
+					<td>setVisible</td>
+					<td>stopAniGroups</td>
+					<td>stopAniGroupsById</td>
+					</tr>
+					<tr>
+					<td>stopCurrentPage</td>
+					<td>stopPage</td>
+					<td>stopPageById</td>
+					<td>updateAnimation</td>					
+					</tr>
+					</tbody>
+				</table>
+				<table>
+					<caption>Events</caption>
+					<tbody>
+					<tr>
+					<td>ALL_ANI_GROUP_STOP</td>
+					<td>ANI_GROUP_DURATION_UPDATE</td>
+					<td>ANI_GROUP_END</td>
+					</tr>
+					<tr>
+					<td>ANI_GROUP_ITERATION</td>
+					<td>ANI_GROUP_START</td>
+					<td>ANI_GROUP_STOP</td>
+					</tr>
+					<tr>
+					<td>ANI_GROUP_TIME_UPDATE</td>
+					<td>LOAD_PLAY_MODEL</td>
+					<td>LOAD_SCENE</td>
+					</tr>
+					<tr>
+					<td>SET_TIME</td>
+					<td>ANI_PLAY_READY</td>
+					<td></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="section">
+			<h1>4. Nodes & Shapes</h1>
+			<div class='article'>
+				<div style='position: absolute;top:200px;left:20px'><img src='img/nodes_cd.gif' /></div>
+				<pre style='font-size:1.7em;padding-left: 320px'>
+
+<span class='comment'>//Shape</span>
+var shape1 = <span class='blue'>ShapeFactory.create</span>({id:'div1'});
+
+<span class='comment'>//ImageShape</span>
+var imgShape1 = <span class='blue'>ShapeFactory.create</span>({id:'img1', type:'Image'});
+imgShape1.setSrc('img/some.png');
+
+<span class='comment'>//ContainerShape</span>
+var containerShape1 = <span class='blue'>ShapeFactory.create</span>({id:'div1', type:'Container'});
+containerShape1.addShape(imgShape1);
+
+<span class='comment'>//VideoShape</span>
+var videoShape1 = <span class='blue'>ShapeFactory.create</span>({id:'div1', type:'Video'});
+videoShape1.play();
+
+				</pre>
+			</div>
+		</div>
+
+		<div class="section">
+			<h1>5. Node & Animation</h1>
+			<div class='article'>
+				<pre class='small'>
+var shape1 = <span class='blue'>ShapeFactory.create</span>({id:'img1', type:'Image'});
+var shape2 = <span class='blue'>ShapeFactory.create</span>({element:someElement});
+
+<span class='comment'>//with CSS
+@keyframes fadeIn {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}</span>
+var fadeIn = <span class='blue'>Animate.create</span>({id:'fadeIn', duration:'0.7s'});
+
+<span class='comment'>//without CSS</span>
+var fadeOut = <span class='blue'>Animate.create</span>({
+	id: 'fadeOut',
+	duration: '0.7s',
+	<span class='red'>css: {0:{opacity:1},100:{opacity:0}}</span>
+});
+
+<span class='comment'>//2way of animation</span>
+fadeIn.<span class='blue'>runWith</span>(shape1);
+shape2.<span class='blue'>runAction</span>(fadeOut);
+
+				</pre>
+			</div>
+		</div>
+
+		<div class="section">
+			<h1>6. Animation Groups</h1>
+			<div class='article'>
+				<div style='position: absolute;top:200px;left:40px'><img src='img/anigroup_cd.gif' /></div>
+				<pre style='font-size:1.6em;padding-left: 520px; line-height: 140%'>
+
+
+<span class='comment'>//Shape & Animate</span>
+var shape1 = <span class='blue'>ShapeFactory.create</span>({id:'div1'});
+var fadeIn = <span class='blue'>Animate.create</span>({id:'fadeIn', duration:'0.7s'});
+
+<span class='comment'>//AniGroup</span>
+var aniGroup1 = AniGroup.create({id:'aniGroup1'});
+aniGroup1.addToScene(scene);
+aniGroup1.addShape(shape1);
+aniGroup1.makePair(shape1, fadeIn);
+aniGroup1.play();
+aniGroup1.setCurrentTime(200);
+				</pre>
+			</div>
+		</div>
+
+		<div class="section" id='sc'>
+			<h1>7. setCurrentTime</h1>
+			<div class='article'>
+				<div id='shape1'>shape1</div>
+				<div id='scrollBG'>
+					<div id='scrollButton'></div>
+				</div>
+				<div id='currentTime'>bounce.setTimeWith(shape1, 0) 0%</div>
+			</div>
+		</div>
+
+		<div class="section">
+			<h1>8. Comparison & Evolution</h1>
+			<div class='article'>
+				<table>
+					<caption>Comparison</caption>
+					<thead>
+					<tr><th></th><th>AniPlay Animator F/W</th><th>jQuery</th></tr>
+					</thead>
+					<tbody>
+					<tr><th>Performance</th><td>CSS3 GPU Acceleration</td><td>JavaScript Animation</td></tr>
+					<tr><th>APIs</th><td>Now Limited</td><td>Wide Range</td></tr>
+					<tr><th>Usage</th><td>Animation Specific<br />
+						<span class='comment'>
+							(Play Model, setCurrentTime,<br />
+							easy CSS3 Animation making)
+						</span>
+					</td><td>As base JS libs</td></tr>
+					<tr><th>License</th><td>MIT/LGPL</td><td>MIT</td></tr>
+					</tbody>
+				</table>
+				<table>
+					<caption>Evolution</caption>
+					<thead>
+					<tr><th>As Is</th><th>To Be</th></tr>
+					</thead>
+					<tbody>
+					<tr><td>Animation Specific F/W</td><td>Web based Animation Tool, Game Engine</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+</body>
+<script src="aniplay-min-0.2.33.js"></script>
+<script>
+window.addEventListener('aniPlayReady', function(oEvent){
+
+	var TP = oEvent.bundle,
+		dom = TP.dom,
+		$ = dom.bySelector,
+		string = TP.string,
+		Animate = TP.Animate,
+		Registry = TP.Registry,
+		ShapeFactory = TP.ShapeFactory,
+		shows = [],
+		hides = [];
+
+	hides.push(Animate.create({"id" : "hideToBottom", "duration": "0.7s"}));
+	hides.push(Animate.create({"id" : "hideToRight", "duration": "0.7s"}));
+	hides.push(Animate.create({"id" : "hideZoom", "duration": "0.7s"}));
+	shows.push(Animate.create({"id" : "showFromLeft", "duration": "0.7s"}));
+	shows.push(Animate.create({"id" : "showFromTop", "duration": "0.7s"}));
+	shows.push(Animate.create({"id" : "showZoom", "duration": "0.7s"}));
+	fadeIn = Animate.create({"id" : "fadeIn", "duration": "0.7s", "holdEnd":true});
+	fadeOut = Animate.create({"id" : "fadeOut", "duration": "0.7s", "holdEnd":true});
+
+	var sections = $('.section');
+	var sectionShapes = [];
+	for(var i in sections){
+		sectionShapes.push(ShapeFactory.create({'element':sections[i]}));
+	}
+
+	sectionShapes[0].show();
+
+	var currentPage = 0, rand = string.getRandomNum;
+	dom.addEvent(document, 'keydown', function(event){
+		if(event.keyCode==37 || event.keyCode==39){
+			for(var i in hides){
+				if(hides[i].get('state')==='run'){
+					hides[i].unbindAnimation();
+					hides[i].target.dom.style.cssText = '';
+				}
+			}
+			hides[rand(0,hides.length-1)].runWith(sectionShapes[currentPage]);
+			if(event.keyCode==39){
+				if(currentPage == (sections.length-1)){
+					currentPage = 0;
+				}else{
+					currentPage++;
+				}
+			}else if(event.keyCode==37){
+				if(currentPage == 0){
+					currentPage = sections.length-1;
+				}else{
+					currentPage--;
+				}
+			}
+			sectionShapes[currentPage].show();
+			shows[rand(0,shows.length-1)].runWith(sectionShapes[currentPage]);
+		}
+	});
+
+	dom.addEvent(document, 'webkitAnimationEnd', function(event){
+		var animate = Registry.getObjectById(event.animationName, 'Animate');
+		if(event.animationName.substr(0,4) == 'hide'){
+			animate.target.dom.style.cssText = '';
+		}
+		if(event.animationName.substr(0,6) == 'fadeIn'){
+			animate.target.dom.style.opacity = 1;
+		}
+		if(event.animationName.substr(0,7) == 'fadeOut'){
+			animate.target.dom.style.cssText = '';
+		}
+		animate.unbindAnimation();
+	});
+
+	setTimeout(function(){
+		var guide = ShapeFactory.create({'id':'guide'});
+		guide.dom.style.opacity=0;
+		guide.show();
+		fadeIn.runWith(guide);
+		setTimeout(function(){
+			fadeOut.runWith(guide);
+		},2000);
+	},500);
+
+
+
+
+
+	//CH 7. setCurrentTime
+	var scrollButton = $('#scrollButton')[0],
+		scrollBG = $('#scrollBG')[0],
+		currentTime = $('#currentTime')[0],
+		isMoveMouse = false,
+		total = 5000;
+
+	var shape1 = ShapeFactory.create({id:'shape1'});
+	var bounce = Animate.create({id:'bounce', duration:"5s", timing:'linear'});
+	var clone = function(element){
+    	var clone = dom.shadowNode(element, true),
+    		zIndex = dom.getStyle(element,'zIndex'),
+    		position = dom.getStyle(element,'position'),
+    		top = dom.getStyle(element, 'Top'),
+			left = dom.getStyle(element, 'Left');
+
+    	if(isNaN(parseInt(zIndex))){
+    		zIndex = -1;
+    	}else{
+    		zIndex = zIndex - 1;
+    	}
+    	dom.setStyles(clone, {
+			position:'absolute',
+			zIndex:zIndex,
+			top:top,
+			left:left,
+    	});
+    	dom.addElement(clone, element, 'after') ;
+    };
+    clone(dom.byId('shape1'));
+    setTimeout(function(){
+    	bounce.detectStyleWith(shape1);
+    },0);
+
+	scrollButton.addEventListener('mousedown', function(oEvent){
+		oEvent.preventDefault();
+	});
+	scrollButton.addEventListener('mousemove', function(oEvent){
+		oEvent.preventDefault();
+	});
+	scrollBG.addEventListener('mousedown', function(oEvent){
+		isMoveMouse = true;
+		moveMouse(oEvent);
+	});
+	scrollBG.addEventListener('mouseup', function(oEvent){
+		isMoveMouse = false;
+		this.onmousemove = null;
+	});
+	scrollBG.addEventListener('mousemove', function(oEvent){
+		moveMouse(oEvent);
+	});
+	moveMouse = function(oEvent){
+		if(isMoveMouse===true){
+			scrollButton.style.width = parseInt(oEvent.offsetX)+'px';
+			
+			var ratio =  parseInt(oEvent.offsetX)/parseInt(dom.getStyle(scrollBG,'width'));
+			var ms = total*ratio;
+			currentTime.innerHTML = 'bounce.setTimeWith(shape1, '+parseInt(ms)+') '+parseInt(ratio*100)+'%';
+			bounce.setTimeWith(shape1, ms);
+		}
+	};
+
+});
+/*
+(function(){
+	var currentPage = 0;
+	$('.section').hide();
+	$('.section:first').show();
+	$(document).bind('keydown', function(event) {
+		if(event.keyCode==37 || event.keyCode==39){
+			$($('.section').get(currentPage)).hide("slow");
+			if(event.keyCode==39){
+				if(currentPage == ($('.section').length-1)){
+					currentPage = 0;
+				}else{
+					currentPage++;
+				}
+			}else if(event.keyCode==37){
+				if(currentPage == 0){
+					currentPage = $('.section').length-1;
+				}else{
+					currentPage--;
+				}
+			}
+			$($('.section').get(currentPage)).show("slow");
+		}
+	});
+	setTimeout(function(){
+		$('#guide').fadeIn('slow', function(){
+			setTimeout(function(){
+				$('#guide').fadeOut('slow');
+			},2000);
+		});
+	},500);
+})();
+*/
+</script>
+</html>

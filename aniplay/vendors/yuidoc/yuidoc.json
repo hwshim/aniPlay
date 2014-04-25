@@ -1,0 +1,9 @@
+{
+    "name": "API Doc",
+    "description": "These are set of facade functions of inner modules",
+    "version": "0.2",
+    "url": "http://www.s-core.co.kr/",
+    "options": {
+        "outdir": "../../../doc/"
+    }
+}
